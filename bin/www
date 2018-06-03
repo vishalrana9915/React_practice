@@ -1,0 +1,5 @@
+import app from '../server/server';
+import {port} from '../server/config';
+app.listen(port, function() {
+ console.log('web app running at localhost: ' + port);
+});
