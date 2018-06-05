@@ -20,7 +20,8 @@
   },
   "scripts": {
     "webpack": "webpack",
-    "start": "npm run webpack && nodemon --exec babel-node -- bin/www"
+    "start": "npm run webpack && nodemon --exec babel-node -- bin/www",
+    "test" : "mocha || true"
   },
   "devDependencies": {
     "chai": "4.1.2",

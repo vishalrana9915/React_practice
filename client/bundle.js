@@ -11366,6 +11366,28 @@ var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import {Provider} from 'react-redux';
+// import thunk from 'redux-thunk';
+// import promise from 'redux-promise';
+// import createLogger from 'redux-logger';
+// import {createStore, applyMiddleware} from 'redux'; 
+
+// var logger = createLogger();
+
+// const store = createStore({
+// 	applyMiddleware(thunk,promise,logger)
+// });
+
+
+// ReactDOM.render(
+
+// 	<Provider store = {store}>
+// 		<Routes />
+
+// 	</Provider>
+
+// 	);
+
 _reactDom2.default.render(_react2.default.createElement(
   _reactRouterDom.HashRouter,
   null,
@@ -34314,7 +34336,7 @@ var withRouter = function withRouter(Component) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.Routes = undefined;
 
@@ -34335,12 +34357,13 @@ var _Login2 = _interopRequireDefault(_Login);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Routes = exports.Routes = function Routes() {
-  return _react2.default.createElement(
-    _reactRouterDom.Switch,
-    null,
-    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _App2.default }),
-    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/login', component: _Login2.default })
-  );
+    return _react2.default.createElement(
+        _reactRouterDom.Switch,
+        null,
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _App2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/login', component: _Login2.default }),
+        '}'
+    );
 };
 
 exports.default = Routes;
@@ -34404,14 +34427,30 @@ var App = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
+    console.log('got it');
     _this.state = { selectedMonth: 'All', selectedYear: 2016, data: [], activeTab: 2016 };
     _this.getData = _this.getData.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
+    key: 'getInitialState',
+    value: function getInitialState() {
+      console.log('onload');
+      var onloadYear = '';
+      if (this.state.selectedYear) {
+        onloadYear = this.state.selectedYear;
+      }
+
+      this.setState({
+        selectedMonth: 'All',
+        selectedYear: onloadYear || 2016
+      });
+    }
+  }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
+      console.log('will recieve props');
       if (nextProps.history.location.search) {
         var search = nextProps.history.location.search;
         search = search.substring(1);
@@ -34427,7 +34466,14 @@ var App = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.getData(this, 2016, 'All');
+      console.log('component did mount');
+      console.log(this.params);
+      var onloadYear = '';
+      if (this.state.selectedYear) {
+        onloadYear = this.state.selectedYear;
+      }
+
+      this.getData(this, onloadYear = 2016, 'All');
     }
   }, {
     key: 'handleSelect',
@@ -35525,6 +35571,7 @@ var Add = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
+      console.log("ello");
       this.setState({
         month: this.props.selectedMonth
       });
@@ -49220,7 +49267,7 @@ var Delete = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         _reactBootstrap.Button,
-        { bsStyle: 'danger', bsSize: 'small', onClick: this.onClick },
+        { onClick: this.onClick },
         _react2.default.createElement(
           _reactRouterDom.Link,
           { to: { pathname: '/', search: '' }, style: { textDecoration: 'none' } },
@@ -49342,13 +49389,14 @@ var Login = function (_Component) {
 		var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
 
 		_this.state = { auth: false, data: {} };
-		_this.getData = _this.getData.bind(_this);
+		_this.login = _this.login.bind(_this);
 		return _this;
 	}
 
 	_createClass(Login, [{
-		key: 'getData',
-		value: function getData(ev, userInfo) {
+		key: 'login',
+		value: function login(ev) {
+			console.log(ev);
 			axios.post('/login').then(function (response) {
 				if (response.responseCode == 200) {
 					ev.setState({ data: response.data });
@@ -49364,7 +49412,7 @@ var Login = function (_Component) {
 				null,
 				_react2.default.createElement(
 					'form',
-					null,
+					{ onSubmit: this.login },
 					_react2.default.createElement(
 						'div',
 						{ className: 'container' },

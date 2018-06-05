@@ -41,6 +41,7 @@ closeModal() {
       });
     }
 componentDidMount() {
+  console.log("ello")
       this.setState({
         month: this.props.selectedMonth
       });

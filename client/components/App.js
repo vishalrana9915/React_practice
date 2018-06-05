@@ -9,10 +9,27 @@ import YearTabsRouter from './tabs/yearTabsRouter';
 export default class App extends React.Component {
 constructor() {
     super();
+    console.log('got it')
   this.state = {selectedMonth:'All', selectedYear: 2016, data: [], activeTab:2016};
     this.getData = this.getData.bind(this);
   }
+
+  getInitialState(){
+    console.log('onload')
+    var onloadYear=''
+    if(this.state.selectedYear){
+      onloadYear = this.state.selectedYear
+    }
+    
+      this.setState({
+        selectedMonth:'All',
+      selectedYear: onloadYear || 2016
+      })
+      
+  }
+
 componentWillReceiveProps(nextProps) {
+  console.log('will recieve props')
     if(nextProps.history.location.search){
     var search = nextProps.history.location.search;
     search = search.substring(1);
@@ -28,7 +45,14 @@ componentWillReceiveProps(nextProps) {
 
 
 componentDidMount(){
-    this.getData(this, 2016, 'All');
+  console.log('component did mount');
+  console.log(this.params)
+  var onloadYear=''
+    if(this.state.selectedYear){
+      onloadYear = this.state.selectedYear
+    }
+    
+    this.getData(this, onloadYear = 2016, 'All');
   }
 
 

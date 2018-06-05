@@ -6,10 +6,11 @@ export default class Login extends Component{
 	constructor(props){
 		super(props);
 		this.state = {auth:false,data: {}};
-    	this.getData = this.getData.bind(this);
+    	this.login = this.login.bind(this);
 	}
 
-	getData(ev,userInfo){
+	login(ev){
+		console.log(ev)
 		axios.post('/login')
       .then(function(response) {
       	if(response.responseCode == 200){
@@ -22,7 +23,7 @@ export default class Login extends Component{
 	render(){
 		return(
 				<div>
-	      			<form>
+	      			<form onSubmit={this.login}>
 					  
 					 <div className ="container">
 					  <fieldset>
